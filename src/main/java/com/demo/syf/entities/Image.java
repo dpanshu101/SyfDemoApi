@@ -17,7 +17,8 @@ public class Image {
 
 	private String url;
 	
-	private String delete_hash;
+	@Column(name = "delete_hash")
+	private String deleteHash;
 
 	public Long getId() {
 		return id;
@@ -44,11 +45,11 @@ public class Image {
 	}
 
 	public String getDelete_hash() {
-		return delete_hash;
+		return deleteHash;
 	}
 
-	public void setDelete_hash(String delete_hash) {
-		this.delete_hash = delete_hash;
+	public void setDelete_hash(String deleteHash) {
+		this.deleteHash = deleteHash;
 	}
 	
 	

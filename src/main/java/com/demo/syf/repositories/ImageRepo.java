@@ -12,6 +12,6 @@ public interface ImageRepo extends CrudRepository<Image, Long> {
 
 	List<Image> findByUsername(String username);
 
-	Image findByDelete_hash(String hash);
+	Image findByDeleteHash(String hash);
 
 }

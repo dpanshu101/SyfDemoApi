@@ -1,5 +1,7 @@
 package com.demo.syf.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -65,13 +67,35 @@ public class ImageService {
 		return resp;
 
 	}
+	
+	public List<Image> fetchImageByUser(String user){
+		return imageRepo.findByUsername(user);
+	}
 
 	private void saveUploadToDb(Response resp,String user) {
 		Image img = new Image();
 		img.setDelete_hash(resp.getData().getDeletehash());
 		img.setUrl(resp.getData().getLink());
 		img.setUsername(user);
+		imageRepo.save(img);
 
+	}
+
+	public void deleteImage(String hash) {
+		Image delImg=imageRepo.findByDeleteHash(hash);
+		
+		RestTemplate t = new RestTemplate();
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", "Client-ID 9306a06fb8c855b");
+
+		HttpEntity<?> requestEnty = new HttpEntity<>(headers);
+
+		t.delete(apiUrl+"/"+hash, requestEnty);
+		
+		imageRepo.deleteById(delImg.getId());
+
+		
 	}
 
 }
