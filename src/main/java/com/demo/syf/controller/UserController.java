@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.demo.syf.entities.User;
 import com.demo.syf.service.UserService;
 
-@RestController
+@RestController("/user")
 public class UserController {
 
 	// Logger logger = Logger
@@ -22,12 +22,12 @@ public class UserController {
 	@Autowired
 	UserService userService;
 
-	@GetMapping("/user")
+	@GetMapping
 	public ResponseEntity<?> fetchAll() {
 		return new ResponseEntity<>(userService.fetchAllUsers(), HttpStatus.OK);
 	}
 
-	@PostMapping("/user")
+	@PostMapping
 	public ResponseEntity<?> addUser(@RequestBody User user) {
 		boolean saved;
 		try {
