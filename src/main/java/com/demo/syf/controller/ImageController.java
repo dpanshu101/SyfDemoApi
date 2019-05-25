@@ -1,6 +1,5 @@
 package com.demo.syf.controller;
 
-import java.awt.Image;
 import java.io.IOException;
 import java.security.Principal;
 
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.demo.syf.model.TokenBean;
+import com.demo.syf.model.Response;
 import com.demo.syf.service.ImageService;
 
 @RestController
@@ -35,7 +34,6 @@ public class ImageController {
 	
 	@PostMapping
 	public ResponseEntity<?> uploadImage(@RequestBody MultipartFile file,Principal user){
-		System.out.println(user.getName());
 		byte[] fileBytes;
 		try {
 			fileBytes = file.getBytes();
@@ -43,12 +41,15 @@ public class ImageController {
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+		Response res;
 		try{
-			imageService.uploadImage(fileBytes);
+			res= imageService.uploadImage(fileBytes,user.getName());
 		}catch (Exception e) {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}if(res==null) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<>(HttpStatus.CREATED);
+		return new ResponseEntity<>(res,HttpStatus.CREATED);
 	}
 
 
