@@ -4,6 +4,15 @@ Execute the jar file using below command:
 
 java -jar syfdemoapi-0.0.1-SNAPSHOT.jar
 
+Create Users via below endpoint (no auth required)
+http://localhost:8098/user //POST SAMPLE BELOW
+
+Supply user name and password as basic authentication to below endpoint to upload/view/delete images:
+
+http://localhost:8098/user
+
+http://localhost:8098/user 
+
 
 Screenshots of steps available on below url:
 https://github.com/dpanshu101/SyfDemoApi/tree/master/screenshots
