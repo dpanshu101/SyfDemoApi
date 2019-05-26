@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -30,7 +31,7 @@ public class ImageService {
 
 	@Autowired
 	TokenBean tokenBean;
-	
+
 	@Autowired
 	ImageRepo imageRepo;
 
@@ -50,7 +51,7 @@ public class ImageService {
 		return tokenBean;
 	}
 
-	public Response uploadImage(byte[] fileBytes,String user) {
+	public Response uploadImage(byte[] fileBytes, String user) {
 		getToken();
 		RestTemplate restTemplate = new RestTemplate();
 
@@ -61,21 +62,21 @@ public class ImageService {
 
 		Response resp = restTemplate.postForObject(apiUrl, requestEnty, Response.class);
 
-		try{
-			saveUploadToDb(resp,user);
-		}catch (Exception e) {
-			logger.error("error in image service",e);
+		try {
+			saveUploadToDb(resp, user);
+		} catch (Exception e) {
+			logger.error("error in image service", e);
 		}
 
 		return resp;
 
 	}
-	
-	public List<Image> fetchImageByUser(String user){
+
+	public List<Image> fetchImageByUser(String user) {
 		return imageRepo.findByUsername(user);
 	}
 
-	private void saveUploadToDb(Response resp,String user) {
+	private void saveUploadToDb(Response resp, String user) {
 		Image img = new Image();
 		img.setDelete_hash(resp.getData().getDeletehash());
 		img.setUrl(resp.getData().getLink());
@@ -85,8 +86,8 @@ public class ImageService {
 	}
 
 	public void deleteImage(String hash) {
-		Image delImg=imageRepo.findByDeleteHash(hash);
-		
+		Image delImg = imageRepo.findByDeleteHash(hash);
+
 		RestTemplate t = new RestTemplate();
 
 		HttpHeaders headers = new HttpHeaders();
@@ -94,11 +95,11 @@ public class ImageService {
 
 		HttpEntity<?> requestEnty = new HttpEntity<>(headers);
 
-		t.delete(apiUrl+"/"+hash, requestEnty);
-		
-		imageRepo.deleteById(delImg.getId());
+		t.exchange(apiUrl + "/" + hash, HttpMethod.DELETE, requestEnty, String.class);
 
-		
+		if (delImg != null && delImg.getId() != null)
+			imageRepo.deleteById(delImg.getId());
+
 	}
 
 }
