@@ -1,5 +1,10 @@
 # SyfDemoApi
 
+Execute the jar file using below command:
+
+java -jar syfdemoapi-0.0.1-SNAPSHOT.jar
+
+
 Screenshots of steps available on below url:
 https://github.com/dpanshu101/SyfDemoApi/tree/master/screenshots
 
