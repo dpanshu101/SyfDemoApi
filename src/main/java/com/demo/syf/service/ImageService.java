@@ -49,14 +49,14 @@ public class ImageService {
 
 	public Response uploadImage(byte[] fileBytes,String user) {
 		getToken();
-		RestTemplate t = new RestTemplate();
+		RestTemplate restTemplate = new RestTemplate();
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", "Bearer " + tokenBean.getAccess_token());
 
 		HttpEntity<?> requestEnty = new HttpEntity<>(fileBytes, headers);
 
-		Response resp = t.postForObject(apiUrl, requestEnty, Response.class);
+		Response resp = restTemplate.postForObject(apiUrl, requestEnty, Response.class);
 
 		try{
 			saveUploadToDb(resp,user);
