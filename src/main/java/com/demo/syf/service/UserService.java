@@ -15,6 +15,7 @@ import com.demo.syf.repositories.UserRepo;
 
 @Service
 public class UserService implements UserDetailsService {
+	
 	@Autowired
 	UserRepo userRepo;
 	
@@ -30,7 +31,7 @@ public class UserService implements UserDetailsService {
 	public boolean addNewUser(User user) {
 		BCryptPasswordEncoder encoder=new BCryptPasswordEncoder();
 		user.setPassword(encoder.encode(user.getPassword()));
-		User u = userRepo.save(user);
+		userRepo.save(user);
 		return true;
 	}
 	

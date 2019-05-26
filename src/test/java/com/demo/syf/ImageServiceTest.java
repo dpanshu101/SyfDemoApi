@@ -1,12 +1,5 @@
 package com.demo.syf;
 
-import static org.hamcrest.CoreMatchers.any;
-import static org.hamcrest.CoreMatchers.anything;
-import static org.junit.Assert.assertNotNull;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.anything;
-
-import javax.persistence.Entity;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -70,7 +63,7 @@ public class ImageServiceTest {
 	@Test(expected = ResourceAccessException.class)
 	public void validateUpload() {
 		byte[] fileBytes = "test".getBytes();
-		Response res = imageService.uploadImage(fileBytes, "test user");
+		imageService.uploadImage(fileBytes, "test user");
 	}
 
 }

@@ -2,6 +2,8 @@ package com.demo.syf.service;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -18,6 +20,7 @@ import com.demo.syf.repositories.ImageRepo;
 
 @Service
 public class ImageService {
+	Logger logger = LoggerFactory.getLogger(ImageService.class);
 
 	@Value("${api.upload.url}")
 	private String apiUrl;
@@ -61,7 +64,7 @@ public class ImageService {
 		try{
 			saveUploadToDb(resp,user);
 		}catch (Exception e) {
-			e.printStackTrace();
+			logger.error("error in image service",e);
 		}
 
 		return resp;

@@ -1,5 +1,7 @@
 package com.demo.syf.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +16,7 @@ import com.demo.syf.service.UserService;
 @RestController("/user")
 public class UserController {
 
-	// Logger logger = Logger
+	Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	@Autowired
 	UserService userService;
@@ -29,7 +31,7 @@ public class UserController {
 		try {
 			userService.addNewUser(user);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("error in user controller",e);
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		return new ResponseEntity<>(HttpStatus.CREATED);
