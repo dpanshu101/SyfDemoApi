@@ -4,6 +4,9 @@ Execute the jar file using below command:
 
 java -jar syfdemoapi-0.0.1-SNAPSHOT.jar
 
+Direct download Jar: https://drive.google.com/open?id=18gJnScjNDbHIhi-oxNfKr-4gvRdcX_rc
+
+
 Create Users via below endpoint (no auth required)  
 http://localhost:8098/user //POST SAMPLE BELOW  
 
